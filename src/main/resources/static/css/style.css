@@ -1,0 +1,568 @@
+/* ========================================
+   CAFÉ AROMA & SABOR - SISTEMA DE ESTOQUE
+   Paleta de Cores e Estilos
+   ======================================== */
+
+/* ========== PALETA DE CORES ==========
+   Cores temáticas relacionadas ao café
+   ======================================== */
+
+:root {
+    /* Cores Principais - Café */
+    --cafe-dark: #3d2817;
+    --cafe-medium: #6a4423;
+    --cafe-light: #f5e6d3;
+    --cafe-accent: #a0662f;
+
+    /* Cores Secundárias */
+    --coffee-dark: #2c1810;
+    --coffee-light: #d4a574;
+
+    /* Cores Neutral */
+    --text-dark: #333333;
+    --text-light: #f5f5f5;
+    --border-color: #e0d4c4;
+}
+
+/* ========== BACKGROUND ==========  */
+
+body {
+    color: var(--text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg-cafe-light {
+    background-color: var(--cafe-light) !important;
+}
+
+.bg-cafe-dark {
+    background-color: var(--cafe-dark) !important;
+}
+
+.bg-cafe-medium {
+    background-color: var(--cafe-medium) !important;
+}
+
+/* ========== NAVBAR E HEADER ==========  */
+
+.navbar-dark {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-light) !important;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.navbar-nav .nav-link {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+    color: var(--text-light) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--coffee-light) !important;
+    text-decoration: underline;
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--coffee-light) !important;
+    font-weight: 600;
+    border-bottom: 2px solid var(--coffee-light);
+}
+
+/* ========== FOOTER ==========  */
+
+footer {
+    margin-top: auto;
+    border-top: 3px solid var(--cafe-accent);
+}
+
+footer p {
+    color: var(--coffee-light);
+    font-size: 0.95rem;
+}
+
+/* ========== CARDS ==========  */
+
+.card-cafe {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.card-cafe:hover {
+    box-shadow: 0 8px 16px rgba(61, 40, 23, 0.15) !important;
+    border-color: var(--cafe-accent);
+    transform: translateY(-2px);
+}
+
+.card-cafe .card-header {
+    background-color: var(--cafe-dark) !important;
+    color: var(--text-light) !important;
+    border-bottom: 3px solid var(--cafe-accent);
+    font-weight: 600;
+}
+
+.card-cafe .card-body {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.bg-light.border-cafe {
+    border: 2px solid var(--cafe-accent) !important;
+    border-radius: 6px;
+}
+
+/* ========== BOTÕES ==========  */
+
+.btn-cafe {
+    background-color: var(--cafe-medium);
+    border-color: var(--cafe-medium);
+    color: var(--text-light);
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.btn-cafe:hover {
+    background-color: var(--cafe-dark);
+    border-color: var(--cafe-dark);
+    color: var(--text-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(61, 40, 23, 0.2);
+}
+
+.btn-cafe:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(61, 40, 23, 0.2);
+}
+
+.btn-outline-light:hover {
+    background-color: transparent;
+    border-color: var(--coffee-light);
+    color: var(--coffee-light);
+}
+
+/* ========== FORMAS / INPUTS ==========  */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--cafe-accent);
+    box-shadow: 0 0 0 0.2rem rgba(160, 102, 47, 0.25);
+}
+
+.form-label {
+    color: var(--cafe-dark);
+    font-weight: 500;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
+}
+
+.form-control::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* ========== TABELAS ==========  */
+
+.table {
+    border-collapse: collapse;
+}
+
+.table-cafe-light {
+    background-color: var(--cafe-light);
+    color: var(--cafe-dark);
+    font-weight: 600;
+    border-bottom: 3px solid var(--cafe-accent);
+}
+
+.table-cafe-light th {
+    padding: 1rem 0.75rem;
+    text-align: left;
+    color: var(--cafe-dark);
+    background-color: var(--cafe-light);
+}
+
+.table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(160, 102, 47, 0.05);
+}
+
+.table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.table strong {
+    color: var(--cafe-dark);
+    font-weight: 600;
+}
+
+/* ========== BADGES/TAGS ==========  */
+
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+.badge.bg-coffee-light {
+    background-color: var(--coffee-light) !important;
+    color: white;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+    color: var(--text-dark) !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+/* ========== ALERTAS ==========  */
+
+.alert {
+    border-radius: 6px;
+    border-left: 5px solid;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alert-warning {
+    border-left-color: #ffc107;
+    background-color: #fff8e1;
+    color: #856404;
+}
+
+.alert-info {
+    border-left-color: #17a2b8;
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.alert-success {
+    border-left-color: #28a745;
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    border-left-color: #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-close {
+    filter: invert(0.8);
+}
+
+/* ========== TÍTULOS E TEXTO ==========  */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--cafe-dark);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.text-cafe {
+    color: var(--cafe-medium) !important;
+}
+
+.text-cafe-dark {
+    color: var(--cafe-dark) !important;
+}
+
+.text-cafe-accent {
+    color: var(--cafe-accent) !important;
+}
+
+a {
+    color: var(--cafe-accent);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--cafe-dark);
+    text-decoration: underline;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.text-muted {
+    color: #666 !important;
+}
+
+/* ========== EFEITOS HOVER ==========  */
+
+.hover-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hover-card:hover {
+    box-shadow: 0 10px 25px rgba(61, 40, 23, 0.15) !important;
+    transform: translateY(-5px);
+}
+
+.hover-card .btn-cafe {
+    transition: all 0.3s ease;
+}
+
+.hover-card:hover .btn-cafe {
+    background-color: var(--cafe-dark);
+    transform: scale(1.05);
+}
+
+/* ========== ÍCONES ==========  */
+
+.icon-large {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+/* ========== BREADCRUMB ==========  */
+
+.breadcrumb {
+    background-color: transparent !important;
+    padding: 0.5rem 0 !important;
+}
+
+.breadcrumb-item {
+    color: var(--cafe-dark);
+}
+
+.breadcrumb-item a {
+    color: var(--cafe-accent);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--cafe-dark);
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: var(--cafe-medium);
+    font-weight: 600;
+}
+
+/* ========== PAGINAÇÃO ==========  */
+
+.pagination {
+    gap: 0.5rem;
+}
+
+.page-link {
+    color: var(--cafe-accent);
+    border-color: var(--border-color);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.page-link:hover:not(.disabled) {
+    background-color: var(--cafe-light);
+    border-color: var(--cafe-accent);
+    color: var(--cafe-dark);
+}
+
+.page-item.active .page-link {
+    background-color: var(--cafe-medium);
+    border-color: var(--cafe-medium);
+}
+
+/* ========== RESPONSIVIDADE ==========  */
+
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .table td {
+        padding: 0.5rem;
+    }
+
+    .card-cafe .card-body {
+        padding: 1rem;
+    }
+
+    .btn-cafe {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .icon-large {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 0.95rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2, h3 {
+        font-size: 1.2rem;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        font-size: 0.8rem;
+    }
+
+    .btn-group {
+        flex-wrap: wrap;
+    }
+
+    .btn-group label {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ========== UTILIDADES ==========  */
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.py-4 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.border-cafe {
+    border-color: var(--cafe-accent) !important;
+    border-width: 2px;
+}
+
+.border-cafe-light {
+    border-color: var(--cafe-light) !important;
+}
+
+.border-success {
+    border-color: #28a745 !important;
+}
+
+.border-warning {
+    border-color: #ffc107 !important;
+}
+
+.border-danger {
+    border-color: #dc3545 !important;
+}
+
+/* ========== SCROLLBAR CUSTOMIZADO ==========  */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--cafe-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--cafe-medium);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--cafe-dark);
+}
+
+/* ========== PRINT STYLES ==========  */
+
+@media print {
+    body {
+        background-color: white;
+    }
+
+    .navbar,
+    footer,
+    .btn-cafe,
+    .btn-outline-light {
+        display: none;
+    }
+
+    .card-cafe {
+        border: 1px solid #000;
+        box-shadow: none;
+    }
+
+    .table tbody tr:hover {
+        background-color: white;
+    }
+}
+

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Estoque - Café Aroma & Sabor</title>
+    <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-cafe-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-cafe-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <strong>☕ Café Aroma & Sabor</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Painel Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cadastro-produtos">Cadastro de Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/gestao-estoque">Gestão de Estoque</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link text-light">Usuário: <strong>João Silva</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light ms-2" href="/login">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent">
+                        <li class="breadcrumb-item"><a href="/">Principal</a></li>
+                        <li class="breadcrumb-item active">Gestão de Estoque</li>
+                    </ol>
+                </nav>
+
+                <!-- Título -->
+                <h1 class="text-cafe-dark mb-4">
+                    📊 Gestão de Estoque
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Formulário de Movimentação -->
+            <div class="col-md-5">
+                <div class="card card-cafe shadow-sm">
+                    <div class="card-header bg-cafe-dark text-white">
+                        <h5 class="mb-0">Registrar Movimentação</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/gestao-estoque">
+                            <!-- Seleção do Produto -->
+                            <div class="mb-3">
+                                <label for="produto" class="form-label text-cafe-dark">
+                                    <strong>Selecione o Produto</strong>
+                                </label>
+                                <select class="form-select" id="produto" name="produto" required>
+                                    <option value="">-- Escolha um produto --</option>
+                                    <option value="CAF001">CAF001 - Café Arábica Premium</option>
+                                    <option value="CAF002">CAF002 - Café Robusta Forte</option>
+                                    <option value="CAF003">CAF003 - Café Moído Espresso</option>
+                                    <option value="CAF004">CAF004 - Café Torrado Médio</option>
+                                    <option value="CAF005">CAF005 - Café Descafeinado</option>
+                                    <option value="CHA001">CHA001 - Chá Verde Premium</option>
+                                    <option value="CHA002">CHA002 - Chá Preto Inglês</option>
+                                    <option value="ACC001">ACC001 - Moedor de Café Manual</option>
+                                    <option value="ACC002">ACC002 - Filtro de Café Reutilizável</option>
+                                    <option value="ACC003">ACC003 - Xícara de Café Cerâmica</option>
+                                    <option value="ALI001">ALI001 - Açúcar Cristal</option>
+                                    <option value="ALI002">ALI002 - Leite em Pó Integral</option>
+                                </select>
+                                <small class="text-muted">Selecione o produto para movimentação</small>
+                            </div>
+
+                            <!-- Tipo de Movimentação -->
+                            <div class="mb-3">
+                                <label class="form-label text-cafe-dark">
+                                    <strong>Tipo de Movimentação</strong>
+                                </label>
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="tipo_movimentacao" id="entrada" value="entrada" required>
+                                    <label class="btn btn-outline-success" for="entrada">
+                                        📥 Entrada
+                                    </label>
+
+                                    <input type="radio" class="btn-check" name="tipo_movimentacao" id="saida" value="saida" required>
+                                    <label class="btn btn-outline-danger" for="saida">
+                                        📤 Saída
+                                    </label>
+                                </div>
+                                <small class="text-muted d-block mt-2">Indique se é entrada ou saída de produtos</small>
+                            </div>
+
+                            <!-- Quantidade -->
+                            <div class="mb-3">
+                                <label for="quantidade" class="form-label text-cafe-dark">
+                                    <strong>Quantidade</strong>
+                                </label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="quantidade"
+                                    name="quantidade"
+                                    placeholder="0"
+                                    min="1"
+                                    required
+                                >
+                                <small class="text-muted">Quantos itens estão sendo movimentados?</small>
+                            </div>
+
+                            <!-- Data da Movimentação -->
+                            <div class="mb-3">
+                                <label for="data_movimentacao" class="form-label text-cafe-dark">
+                                    <strong>Data da Movimentação</strong>
+                                </label>
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="data_movimentacao"
+                                    name="data_movimentacao"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Observações -->
+                            <div class="mb-3">
+                                <label for="observacoes" class="form-label text-cafe-dark">
+                                    <strong>Observações (opcional)</strong>
+                                </label>
+                                <textarea
+                                    class="form-control"
+                                    id="observacoes"
+                                    name="observacoes"
+                                    rows="3"
+                                    placeholder="Adicione observações sobre a movimentação"
+                                ></textarea>
+                            </div>
+
+                            <!-- Botões -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-cafe">
+                                    ✓ Registrar Movimentação
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary">
+                                    ✕ Limpar
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Info Box -->
+                        <div class="alert alert-info mt-3 mb-0">
+                            <strong>ℹ️ Dica:</strong> Selecione o produto, escolha o tipo de movimentação e informe a quantidade. O sistema atualizará o estoque automaticamente.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Produtos -->
+            <div class="col-md-7">
+                <!-- Filtro de Produtos -->
+                <div class="card card-cafe shadow-sm mb-4">
+                    <div class="card-body">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="🔍 Buscar produto por código ou nome..."
+                            id="busca-estoque"
+                        >
+                    </div>
+                </div>
+
+                <!-- Tabela de Estoque -->
+                <div class="card card-cafe shadow-sm">
+                    <div class="card-header bg-cafe-dark text-white">
+                        <h5 class="mb-0">Produtos em Estoque (Ordem Alfabética)</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-cafe-light">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nome do Produto</th>
+                                        <th>Qtd. Atual</th>
+                                        <th>Mín.</th>
+                                        <th>Status</th>
+                                        <th>Validade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Café Arábica Premium -->
+                                    <tr>
+                                        <td><strong>CAF001</strong></td>
+                                        <td>Café Arábica Premium</td>
+                                        <td>
+                                            <span class="badge bg-success">45</span>
+                                        </td>
+                                        <td>20</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>25/12/2025</td>
+                                    </tr>
+
+                                    <!-- Café Descafeinado -->
+                                    <tr>
+                                        <td><strong>CAF005</strong></td>
+                                        <td>Café Descafeinado</td>
+                                        <td>
+                                            <span class="badge bg-warning">15</span>
+                                        </td>
+                                        <td>15</td>
+                                        <td>
+                                            <span class="badge bg-warning">MÍNIMO</span>
+                                        </td>
+                                        <td>14/09/2025</td>
+                                    </tr>
+
+                                    <!-- Café Moído Espresso -->
+                                    <tr>
+                                        <td><strong>CAF003</strong></td>
+                                        <td>Café Moído Espresso</td>
+                                        <td>
+                                            <span class="badge bg-danger">12</span>
+                                        </td>
+                                        <td>25</td>
+                                        <td>
+                                            <span class="badge bg-danger">CRÍTICO</span>
+                                        </td>
+                                        <td>30/06/2025</td>
+                                    </tr>
+
+                                    <!-- Café Robusta Forte -->
+                                    <tr>
+                                        <td><strong>CAF002</strong></td>
+                                        <td>Café Robusta Forte</td>
+                                        <td>
+                                            <span class="badge bg-success">30</span>
+                                        </td>
+                                        <td>15</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>10/08/2025</td>
+                                    </tr>
+
+                                    <!-- Café Torrado Médio -->
+                                    <tr>
+                                        <td><strong>CAF004</strong></td>
+                                        <td>Café Torrado Médio</td>
+                                        <td>
+                                            <span class="badge bg-success">35</span>
+                                        </td>
+                                        <td>20</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>18/11/2025</td>
+                                    </tr>
+
+                                    <!-- Açúcar Cristal -->
+                                    <tr>
+                                        <td><strong>ALI001</strong></td>
+                                        <td>Açúcar Cristal</td>
+                                        <td>
+                                            <span class="badge bg-success">50</span>
+                                        </td>
+                                        <td>30</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>20/05/2026</td>
+                                    </tr>
+
+                                    <!-- Chá Preto Inglês -->
+                                    <tr>
+                                        <td><strong>CHA002</strong></td>
+                                        <td>Chá Preto Inglês</td>
+                                        <td>
+                                            <span class="badge bg-warning">18</span>
+                                        </td>
+                                        <td>12</td>
+                                        <td>
+                                            <span class="badge bg-warning">PRÓXIMO MÍNIMO</span>
+                                        </td>
+                                        <td>22/07/2025</td>
+                                    </tr>
+
+                                    <!-- Chá Verde Premium -->
+                                    <tr>
+                                        <td><strong>CHA001</strong></td>
+                                        <td>Chá Verde Premium</td>
+                                        <td>
+                                            <span class="badge bg-success">28</span>
+                                        </td>
+                                        <td>10</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>15/10/2025</td>
+                                    </tr>
+
+                                    <!-- Filtro de Café Reutilizável -->
+                                    <tr>
+                                        <td><strong>ACC002</strong></td>
+                                        <td>Filtro de Café Reutilizável</td>
+                                        <td>
+                                            <span class="badge bg-success">60</span>
+                                        </td>
+                                        <td>30</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>31/12/2026</td>
+                                    </tr>
+
+                                    <!-- Leite em Pó Integral -->
+                                    <tr>
+                                        <td><strong>ALI002</strong></td>
+                                        <td>Leite em Pó Integral</td>
+                                        <td>
+                                            <span class="badge bg-warning">24</span>
+                                        </td>
+                                        <td>15</td>
+                                        <td>
+                                            <span class="badge bg-warning">PRÓXIMO MÍNIMO</span>
+                                        </td>
+                                        <td>12/03/2026</td>
+                                    </tr>
+
+                                    <!-- Moedor de Café Manual -->
+                                    <tr>
+                                        <td><strong>ACC001</strong></td>
+                                        <td>Moedor de Café Manual</td>
+                                        <td>
+                                            <span class="badge bg-danger">8</span>
+                                        </td>
+                                        <td>5</td>
+                                        <td>
+                                            <span class="badge bg-warning">MÍNIMO</span>
+                                        </td>
+                                        <td>31/12/2026</td>
+                                    </tr>
+
+                                    <!-- Xícara de Café Cerâmica -->
+                                    <tr>
+                                        <td><strong>ACC003</strong></td>
+                                        <td>Xícara de Café Cerâmica</td>
+                                        <td>
+                                            <span class="badge bg-success">100</span>
+                                        </td>
+                                        <td>50</td>
+                                        <td>
+                                            <span class="badge bg-success">OK</span>
+                                        </td>
+                                        <td>31/12/2027</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sumário -->
+                <div class="row mt-4 g-3">
+                    <div class="col-md-4">
+                        <div class="card bg-light border-success">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Situação OK</h6>
+                                <h3 class="text-success">8</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light border-warning">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Alerta Mínimo</h6>
+                                <h3 class="text-warning">3</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Crítico</h6>
+                                <h3 class="text-danger">1</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Histórico de Movimentações -->
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card card-cafe shadow-sm">
+                    <div class="card-header bg-cafe-dark text-white">
+                        <h5 class="mb-0">Histórico de Movimentações (Últimas 10)</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover mb-0">
+                                <thead class="table-cafe-light">
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Tipo</th>
+                                        <th>Produto</th>
+                                        <th>Quantidade</th>
+                                        <th>Usuário</th>
+                                        <th>Observações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>21/05/2024 14:30</td>
+                                        <td><span class="badge bg-success">ENTRADA</span></td>
+                                        <td>Café Arábica Premium</td>
+                                        <td>15</td>
+                                        <td>João Silva</td>
+                                        <td>Compra fornecedor A</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21/05/2024 13:15</td>
+                                        <td><span class="badge bg-danger">SAÍDA</span></td>
+                                        <td>Café Moído Espresso</td>
+                                        <td>5</td>
+                                        <td>Maria Santos</td>
+                                        <td>Venda cliente X</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21/05/2024 11:45</td>
+                                        <td><span class="badge bg-success">ENTRADA</span></td>
+                                        <td>Açúcar Cristal</td>
+                                        <td>20</td>
+                                        <td>João Silva</td>
+                                        <td>Compra fornecedor B</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21/05/2024 10:20</td>
+                                        <td><span class="badge bg-danger">SAÍDA</span></td>
+                                        <td>Chá Verde Premium</td>
+                                        <td>3</td>
+                                        <td>Carlos Oliveira</td>
+                                        <td>Venda balcão</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20/05/2024 16:00</td>
+                                        <td><span class="badge bg-success">ENTRADA</span></td>
+                                        <td>Café Robusta Forte</td>
+                                        <td>12</td>
+                                        <td>Maria Santos</td>
+                                        <td>Ajuste estoque</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20/05/2024 14:30</td>
+                                        <td><span class="badge bg-danger">SAÍDA</span></td>
+                                        <td>Moedor de Café Manual</td>
+                                        <td>1</td>
+                                        <td>João Silva</td>
+                                        <td>Venda cliente Y</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20/05/2024 13:00</td>
+                                        <td><span class="badge bg-success">ENTRADA</span></td>
+                                        <td>Filtro de Café Reutilizável</td>
+                                        <td>25</td>
+                                        <td>Carlos Oliveira</td>
+                                        <td>Compra fornecedor C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20/05/2024 11:15</td>
+                                        <td><span class="badge bg-danger">SAÍDA</span></td>
+                                        <td>Leite em Pó Integral</td>
+                                        <td>2</td>
+                                        <td>Maria Santos</td>
+                                        <td>Venda balcão</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20/05/2024 09:45</td>
+                                        <td><span class="badge bg-success">ENTRADA</span></td>
+                                        <td>Café Torrado Médio</td>
+                                        <td>18</td>
+                                        <td>João Silva</td>
+                                        <td>Compra fornecedor A</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19/05/2024 15:20</td>
+                                        <td><span class="badge bg-danger">SAÍDA</span></td>
+                                        <td>Chá Preto Inglês</td>
+                                        <td>4</td>
+                                        <td>Carlos Oliveira</td>
+                                        <td>Venda cliente Z</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-cafe-dark text-light text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2024 Café Aroma & Sabor - Sistema de Gestão de Estoque</p>
+    </footer>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

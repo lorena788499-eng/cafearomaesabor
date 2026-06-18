@@ -1,0 +1,410 @@
+# 🗺️ Mapa do Projeto - Café Aroma & Sabor (Etapa 3)
+
+## 📊 Diagrama de Fluxo
+
+```
+┌───────────────────────────────────────────────────────────────┐
+│                    USUÁRIO VIA NAVEGADOR                      │
+└───────────────┬─────────────────────────────────────────────────┘
+                │
+                ▼
+        ┌─────────────────┐
+        │   THYMELEAF     │
+        │   TEMPLATES     │
+        └────────┬────────┘
+                 │
+      ┌──────────┼──────────┐
+      │          │          │
+      ▼          ▼          ▼
+   login.html  index.html  cadastro-produtos.html
+                              gestao-estoque.html
+      │          │          │
+      └──────────┼──────────┘
+                 │
+                 ▼
+    ┌─────────────────────────────┐
+    │      SPRING CONTROLLERS     │
+    │  (4 classes, 13 rotas)      │
+    ├─────────────────────────────┤
+    │ @GetMapping                 │
+    │ @PostMapping                │
+    │ Controlam a lógica de fluxo │
+    └──────────────┬──────────────┘
+                   │
+                   ▼
+    ┌─────────────────────────────┐
+    │     JPA REPOSITORIES        │
+    │  (3 classes, 15 métodos)    │
+    ├─────────────────────────────┤
+    │ findBy...                   │
+    │ save()                      │
+    │ delete()                    │
+    │ findAll()                   │
+    └──────────────┬──────────────┘
+                   │
+                   ▼
+    ┌─────────────────────────────┐
+    │      JPA MODELS/ENTITIES    │
+    │  (3 classes com @Entity)    │
+    ├─────────────────────────────┤
+    │ Usuario                     │
+    │ Produto                     │
+    │ MovimentacaoEstoque         │
+    └──────────────┬──────────────┘
+                   │
+                   ▼
+    ┌─────────────────────────────┐
+    │       MYSQL DATABASE        │
+    │   (3 tabelas normalizadas)  │
+    ├─────────────────────────────┤
+    │ usuarios                    │
+    │ produtos                    │
+    │ movimentacoes_estoque       │
+    └─────────────────────────────┘
+```
+
+---
+
+## 🎯 Casos de Uso Mapeados
+
+### 1. Login de Usuário
+```
+User    Browser         Server              Database
+  │        │                │                    │
+  │─login──│                │                    │
+  │        │────GET /login──│                    │
+  │        │                │                    │
+  │─submit │                │                    │
+  │        │──POST /login───│                    │
+  │        │                │──findByNomeUsuario─│
+  │        │                │                    │
+  │        │                │◄──Usuario found────│
+  │        │                │                    │
+  │        │◄──Set Session──│                    │
+  │        │                │                    │
+  │        │◄──Redirect /───│                    │
+  │──OK────│                │                    │
+```
+
+### 2. Cadastrar Produto
+```
+User    Browser              Server          Database
+  │        │                    │                │
+  │        │─GET /cadastro──────│                │
+  │        │                    │                │
+  │        │◄──List Products────│◄──findAll()───│
+  │        │                    │                │
+  │─Enter  │                    │                │
+  │ data   │─POST /cadastro─────│                │
+  │        │                    │                │
+  │        │                    │──Validate─┐    │
+  │        │                    │   & Save──│─── │
+  │        │                    │           │    │
+  │        │◄──Success Message──│◄──Created─│    │
+  │──OK────│                    │                │
+```
+
+### 3. Registrar Movimentação de Estoque
+```
+User    Browser              Server                 Database
+  │        │                    │                        │
+  │        │─GET /estoque───────│                        │
+  │        │                    │                        │
+  │        │◄──Form & List──────│◄──findByOrderByNome──┤
+  │        │                    │                        │
+  │─Select │                    │                        │
+  │ & Fill │─POST /estoque──────│                        │
+  │        │                    │                        │
+  │        │                    │──Validate───────┐      │
+  │        │                    │──Update Qtd─────│──┐   │
+  │        │                    │──Save Movement─┘   └──│
+  │        │                    │                        │
+  │        │◄──Updated Products│◄──findAll()────────────│
+  │──OK────│                    │                        │
+```
+
+---
+
+## 📊 Relacionamento de Entidades
+
+```
+                    ┌──────────────────┐
+                    │    USUARIO       │
+                    ├──────────────────┤
+                    │ id (PK)          │
+                    │ nomeUsuario (UK) │
+                    │ senha            │
+                    │ nomeCompleto     │
+                    │ email            │
+                    │ ativo            │
+                    └────────┬─────────┘
+                             │
+                    (1)      │      (N)
+                             │
+                             ▼
+              ┌──────────────────────────────┐
+              │  MOVIMENTACAO_ESTOQUE        │
+              ├──────────────────────────────┤
+              │ id (PK)                      │
+              │ usuario_id (FK)              │
+              │ produto_id (FK)              │
+              │ tipo (ENTRADA/SAIDA)         │
+              │ quantidade                   │
+              │ data_movimentacao            │
+              │ observacoes                  │
+              └──────────┬───────────────────┘
+                         │
+                (N)      │      (1)
+                         │
+                         ▼
+                    ┌──────────────────┐
+                    │    PRODUTO       │
+                    ├──────────────────┤
+                    │ id (PK)          │
+                    │ codigo (UK)      │
+                    │ nome             │
+                    │ descricao        │
+                    │ categoria        │
+                    │ quantidade       │
+                    │ estoqueMinimo    │
+                    │ lote             │
+                    │ dataValidade     │
+                    └──────────────────┘
+```
+
+---
+
+## 🎮 Fluxo de Controllers to Views
+
+```
+REQUEST                CONTROLLER              VIEW (THYMELEAF)
+   │                      │                            │
+   ├─GET /login──────────→│ LoginController          │
+   │                      │  .mostrarLogin()        │
+   │                      └──────────────────────────→│ login.html
+   │                                                  │
+   ├─POST /login─────────→│ LoginController          │
+   │                      │  .processarLogin()      │
+   │                      │                          │
+   │◄─Set Session─────────│ (Armazena na sessão)    │
+   │                      │                          │
+   ├─GET / ───────────────→│ HomeController          │
+   │                      │  .index()               │
+   │                      │  .calcularEstatísticas()│
+   │                      └──────────────────────────→│ index.html
+   │                                                  │ (com dados)
+   │
+   ├─GET /cadastro───────→│ ProdutoController       │
+   │                      │  .mostrarCadastroProd() │
+   │                      │  .buscarProdutos()     │
+   │                      └──────────────────────────→│ cadastro-
+   │                                                  │ produtos.html
+   │
+   ├─POST /cadastro──────→│ ProdutoController       │
+   │                      │  .salvarProduto()       │
+   │                      │  .validar()             │
+   │                      │─→ ProdutoRepository    │
+   │                      │   .save()               │
+   │◄─Sucesso/Erro────────│                        │
+   │
+   ├─GET /gestao────────→│ EstoqueController       │
+   │                      │  .mostrarGestaoEstoque()│
+   │                      └──────────────────────────→│ gestao-
+   │                                                  │ estoque.html
+   │
+   ├─POST /gestao────────→│ EstoqueController       │
+   │                      │  .registrarMovimentação │
+   │                      │  .atualizar..()         │
+   │                      │─→ ProdutoRepository    │
+   │                      │   .save()               │
+   │                      │─→ MovimentacaRepository│
+   │                      │   .save()               │
+   │◄─Sucesso/Erro────────│                        │
+   │
+   ├─GET /logout────────→│ LoginController         │
+   │                      │  .logout()              │
+   │                      │  .invalidateSession()  │
+   │◄─Redirect /login─────│                        │
+```
+
+---
+
+## 🔄 Ciclo de Vida de uma Transação
+
+```
+USUÁRIO                BROWSER              CONTROLLER          REPOSITORY          DATABASE
+   │                      │                    │                    │                   │
+   ├─Fill Form────────────│                    │                    │                   │
+   │                      │                    │                    │                   │
+   │                   (Submit)                │                    │                   │
+   │                      │                    │                    │                   │
+   │                      ├─POST Request──────→│ Recebe dados       │                   │
+   │                      │                    │                    │                   │
+   │                      │                    ├─Validar────┐       │                   │
+   │                      │                    │           ✓│       │                   │
+   │                      │                    │                    │                   │
+   │                      │                    ├─Call Method──────→│ Executa Query     │
+   │                      │                    │                    │                   │
+   │                      │                    │                    ├─SQL (INSERT/═────│
+   │                      │                    │                    │   UPDATE)          │
+   │                      │                    │                    │                   │
+   │                      │                    │◄───Object Created──│◄────Commit────────│
+   │                      │                    │                    │                   │
+   │                      │◄──HTML Response────│ Prepara View       │                   │
+   │                      │  com dados         │                    │                   │
+   │                      │                    │                    │                   │
+   │◄─────HTML/CSS────────│                    │                    │                   │
+   │                      │                    │                    │                   │
+```
+
+---
+
+## 🔐 Fluxo de Autenticação
+
+```
+┌─────────────┐
+│   Login     │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────────────────┐
+│ Verificar autenticação  │
+│ session.getAttribute    │
+│ ("usuarioLogado")       │
+└───────┬─────────────────┘
+        │
+   ┌────┴────┐
+   │          │
+   ▼          ▼
+ (null)     (usuário)
+   │          │
+   │          └─────→ ✓ Continuar
+   │
+   │
+   ▼
+redirect:/login
+```
+
+---
+
+## 📊 Tabelas de Banco de Dados
+
+### USUARIOS
+```
+┌────┬─────────────┬────────┬─────────────┬──────────┬────────┐
+│ id │ nomeUsuario │ senha  │ nomeCompleto│  email   │ ativo  │
+├────┼─────────────┼────────┼─────────────┼──────────┼────────┤
+│ 1  │ admin       │ 123456 │ Administrador│ admin...│ true   │
+│ 2  │ joao        │ 123456 │ João Silva   │ joao@... │ true   │
+└────┴─────────────┴────────┴─────────────┴──────────┴────────┘
+```
+
+### PRODUTOS
+```
+┌────┬────────┬──────┬───────────┬──────────┬───────────┬─────┐
+│ id │ codigo │ nome │ categoria │ qtd      │ qtd_min   │ ... │
+├────┼────────┼──────┼───────────┼──────────┼───────────┼─────┤
+│ 1  │ CAF001 │ Café │ cafe      │ 45       │ 20        │ ... │
+│ 2  │ CAF002 │ Café │ cafe      │ 30       │ 15        │ ... │
+│... │  ...   │ ...  │  ...      │  ...     │  ...      │ ... │
+└────┴────────┴──────┴───────────┴──────────┴───────────┴─────┘
+```
+
+### MOVIMENTACOES_ESTOQUE
+```
+┌────┬────────────┬──────────┬──────┬──────────┬─────────────┐
+│ id │ produto_id │ usuario_ │ tipo │ qtd      │ data        │
+│    │            │ id       │      │          │             │
+├────┼────────────┼──────────┼──────┼──────────┼─────────────┤
+│ 1  │ 1          │ 1        │ ENTRADA │ 15  │ 2026-05-22 │
+│ 2  │ 2          │ 2        │ SAIDA   │ 5   │ 2026-05-22 │
+└────┴────────────┴──────────┴──────┴──────────┴─────────────┘
+```
+
+---
+
+## 🎯 Endpoints por Funcionalidade
+
+```
+AUTENTICAÇÃO
+├─ GET  /login              → Mostrar formulário
+├─ POST /login              → Processar login
+└─ GET  /logout             → Logout
+
+PAINEL
+├─ GET  /                   → Dashboard
+└─ GET  /index              → Alternativa
+
+PRODUTOS (CRUD)
+├─ GET  /cadastro-produtos  → Listar
+├─ POST /cadastro-produtos  → Criar
+├─ GET  /cadastro-produtos/buscar   → Buscar
+├─ POST /cadastro-produtos/{id}     → Atualizar
+└─ GET  /cadastro-produtos/deletar/{id} → Deletar
+
+ESTOQUE
+├─ GET  /gestao-estoque            → Dashboard de estoque
+├─ POST /gestao-estoque            → Registrar movimentação
+├─ GET  /gestao-estoque/buscar     → Buscar produtos
+└─ GET  /gestao-estoque/historico  → Ver histórico
+```
+
+---
+
+## 📦 Estrutura de Dependências
+
+```
+CafeAromaESaborApplication (Main)
+    │
+    ├─→ LoginController
+    │   └─→ UsuarioRepository
+    │       └─→ Usuario (JPA Entity)
+    │           └─→ MovimentacaoEstoque
+    │
+    ├─→ HomeController
+    │   ├─→ ProdutoRepository
+    │   │   └─→ Produto (JPA Entity)
+    │   └─→ MovimentacaoEstoqueRepository
+    │
+    ├─→ ProdutoController
+    │   └─→ ProdutoRepository
+    │       └─→ Produto (JPA Entity)
+    │
+    ├─→ EstoqueController
+    │   ├─→ ProdutoRepository
+    │   ├─→ MovimentacaoEstoqueRepository
+    │   └─→ UsuarioRepository
+    │
+    └─→ DataInitializer (CommandLineRunner)
+        ├─→ UsuarioRepository
+        └─→ ProdutoRepository
+```
+
+---
+
+## 🚀 Fluxo de Inicialização
+
+```
+1. Aplicação Inicia
+   │
+2. Spring Boot carrega contexto
+   │
+3. DataInitializer.initializeData() executado
+   │
+   ├─ Verifica se usuários existem
+   ├─ Se não existem → Cria 2 usuários de teste
+   │
+   ├─ Verifica se produtos existem
+   ├─ Se não existem → Cria 12 produtos de exemplo
+   │
+   └─ Database pronta para uso
+   │
+4. Aplicação aguarda requisições HTTP
+```
+
+---
+
+**Versão:** 1.0.0  
+**Data:** 22/05/2026  
+**Status:** ✅ Completo
+

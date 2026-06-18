@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Café Aroma & Sabor</title>
+    <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-cafe-light d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <!-- Card de Login -->
+                <div class="card card-cafe shadow-lg border-0">
+                    <div class="card-body p-5">
+                        <!-- Logo/Título -->
+                        <div class="text-center mb-5">
+                            <div class="display-1 mb-3">☕</div>
+                            <h2 class="text-cafe-dark mb-2">Café Aroma & Sabor</h2>
+                            <p class="text-muted">Sistema de Gestão de Estoque</p>
+                        </div>
+
+                        <!-- Mensagem de Erro (se houver) -->
+                        <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>⚠️ Erro:</strong> <span th:text="${erro}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Formulário de Login -->
+                        <form method="POST" th:action="@{/login}">
+                            <!-- Campo Usuário -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label text-cafe-dark">
+                                    <strong>Usuário</strong>
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="username"
+                                    name="username"
+                                    placeholder="Digite seu usuário"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Campo Senha -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label text-cafe-dark">
+                                    <strong>Senha</strong>
+                                </label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Digite sua senha"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Botão Login -->
+                            <button type="submit" class="btn btn-cafe w-100 btn-lg">
+                                Entrar
+                            </button>
+                        </form>
+
+                        <!-- Separador -->
+                        <div class="text-center mt-4">
+                            <hr>
+                            <p class="text-muted small">
+                                <strong>Credenciais de Teste:</strong><br>
+                                Usuário: admin | Senha: 123456
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rodapé -->
+                <div class="text-center mt-4 text-muted">
+                    <small>&copy; 2026 Café Aroma & Sabor - Todos os direitos reservados</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

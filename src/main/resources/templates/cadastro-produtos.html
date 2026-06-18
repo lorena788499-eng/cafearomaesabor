@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos - Café Aroma & Sabor</title>
+    <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-cafe-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-cafe-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <strong>☕ Café Aroma & Sabor</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Painel Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/cadastro-produtos">Cadastro de Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gestao-estoque">Gestão de Estoque</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link text-light">Usuário: <strong>João Silva</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light ms-2" href="/login">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent">
+                        <li class="breadcrumb-item"><a href="/">Principal</a></li>
+                        <li class="breadcrumb-item active">Cadastro de Produtos</li>
+                    </ol>
+                </nav>
+
+                <!-- Título -->
+                <h1 class="text-cafe-dark mb-4">
+                    📦 Cadastro de Produtos
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Coluna de Formulário -->
+            <div class="col-md-4">
+                <div class="card card-cafe shadow-sm">
+                    <div class="card-header bg-cafe-dark text-white">
+                        <h5 class="mb-0">Novo Produto</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/cadastro-produtos">
+                            <!-- Código do Produto -->
+                            <div class="mb-3">
+                                <label for="codigo" class="form-label text-cafe-dark">
+                                    <strong>Código</strong>
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="codigo"
+                                    name="codigo"
+                                    placeholder="Ex: CAF001"
+                                    required
+                                >
+                                <small class="text-muted">Código único do produto</small>
+                            </div>
+
+                            <!-- Nome do Produto -->
+                            <div class="mb-3">
+                                <label for="nome" class="form-label text-cafe-dark">
+                                    <strong>Nome do Produto</strong>
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="nome"
+                                    name="nome"
+                                    placeholder="Ex: Café Arábica Premium"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Categoria -->
+                            <div class="mb-3">
+                                <label for="categoria" class="form-label text-cafe-dark">
+                                    <strong>Categoria</strong>
+                                </label>
+                                <select class="form-select" id="categoria" name="categoria" required>
+                                    <option value="">Selecione uma categoria</option>
+                                    <option value="cafe">Café em Grãos</option>
+                                    <option value="cafe_moido">Café Moído</option>
+                                    <option value="cha">Chá</option>
+                                    <option value="acessorios">Acessórios</option>
+                                    <option value="alimentos">Alimentos</option>
+                                </select>
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label text-cafe-dark">
+                                    <strong>Descrição</strong>
+                                </label>
+                                <textarea
+                                    class="form-control"
+                                    id="descricao"
+                                    name="descricao"
+                                    rows="2"
+                                    placeholder="Descreva o produto"
+                                ></textarea>
+                            </div>
+
+                            <!-- Quantidade em Estoque -->
+                            <div class="mb-3">
+                                <label for="quantidade" class="form-label text-cafe-dark">
+                                    <strong>Quantidade Inicial</strong>
+                                </label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="quantidade"
+                                    name="quantidade"
+                                    placeholder="0"
+                                    min="0"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Estoque Mínimo -->
+                            <div class="mb-3">
+                                <label for="estoque_minimo" class="form-label text-cafe-dark">
+                                    <strong>Estoque Mínimo</strong>
+                                </label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="estoque_minimo"
+                                    name="estoque_minimo"
+                                    placeholder="0"
+                                    min="0"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Número do Lote -->
+                            <div class="mb-3">
+                                <label for="lote" class="form-label text-cafe-dark">
+                                    <strong>Número do Lote</strong>
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="lote"
+                                    name="lote"
+                                    placeholder="Ex: L12345"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Data de Validade -->
+                            <div class="mb-3">
+                                <label for="data_validade" class="form-label text-cafe-dark">
+                                    <strong>Data de Validade</strong>
+                                </label>
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="data_validade"
+                                    name="data_validade"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Botões -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-cafe">
+                                    ✓ Cadastrar Produto
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary">
+                                    ✕ Limpar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna de Listagem -->
+            <div class="col-md-8">
+                <!-- Busca -->
+                <div class="card card-cafe shadow-sm mb-4">
+                    <div class="card-body">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="🔍 Buscar por nome do produto..."
+                            id="busca-produto"
+                        >
+                    </div>
+                </div>
+
+                <!-- Tabela de Produtos -->
+                <div class="card card-cafe shadow-sm">
+                    <div class="card-header bg-cafe-dark text-white">
+                        <h5 class="mb-0">Produtos Cadastrados (12)</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-cafe-light">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nome</th>
+                                        <th>Categoria</th>
+                                        <th>Qtd.</th>
+                                        <th>Mín.</th>
+                                        <th>Lote</th>
+                                        <th>Validade</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Exemplo 1 -->
+                                    <tr>
+                                        <td><strong>CAF001</strong></td>
+                                        <td>Café Arábica Premium</td>
+                                        <td><span class="badge bg-coffee-light">Café Grãos</span></td>
+                                        <td>45</td>
+                                        <td>20</td>
+                                        <td>L12345</td>
+                                        <td>25/12/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 2 -->
+                                    <tr>
+                                        <td><strong>CAF002</strong></td>
+                                        <td>Café Robusta Forte</td>
+                                        <td><span class="badge bg-coffee-light">Café Grãos</span></td>
+                                        <td>30</td>
+                                        <td>15</td>
+                                        <td>L12346</td>
+                                        <td>10/08/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 3 -->
+                                    <tr>
+                                        <td><strong>CAF003</strong></td>
+                                        <td>Café Moído Espresso</td>
+                                        <td><span class="badge bg-info">Café Moído</span></td>
+                                        <td>12</td>
+                                        <td>25</td>
+                                        <td>L12347</td>
+                                        <td>30/06/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 4 -->
+                                    <tr>
+                                        <td><strong>CHA001</strong></td>
+                                        <td>Chá Verde Premium</td>
+                                        <td><span class="badge bg-success">Chá</span></td>
+                                        <td>28</td>
+                                        <td>10</td>
+                                        <td>L12348</td>
+                                        <td>15/10/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 5 -->
+                                    <tr>
+                                        <td><strong>ACC001</strong></td>
+                                        <td>Moedor de Café Manual</td>
+                                        <td><span class="badge bg-warning">Acessórios</span></td>
+                                        <td>8</td>
+                                        <td>5</td>
+                                        <td>L12349</td>
+                                        <td>31/12/2026</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 6 -->
+                                    <tr>
+                                        <td><strong>ALI001</strong></td>
+                                        <td>Açúcar Cristal</td>
+                                        <td><span class="badge bg-secondary">Alimentos</span></td>
+                                        <td>50</td>
+                                        <td>30</td>
+                                        <td>L12350</td>
+                                        <td>20/05/2026</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 7 -->
+                                    <tr>
+                                        <td><strong>CAF004</strong></td>
+                                        <td>Café Torrado Médio</td>
+                                        <td><span class="badge bg-coffee-light">Café Grãos</span></td>
+                                        <td>35</td>
+                                        <td>20</td>
+                                        <td>L12351</td>
+                                        <td>18/11/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 8 -->
+                                    <tr>
+                                        <td><strong>CAF005</strong></td>
+                                        <td>Café Descafeinado</td>
+                                        <td><span class="badge bg-coffee-light">Café Grãos</span></td>
+                                        <td>22</td>
+                                        <td>15</td>
+                                        <td>L12352</td>
+                                        <td>14/09/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 9 -->
+                                    <tr>
+                                        <td><strong>ACC002</strong></td>
+                                        <td>Filtro de Café Reutilizável</td>
+                                        <td><span class="badge bg-warning">Acessórios</span></td>
+                                        <td>60</td>
+                                        <td>30</td>
+                                        <td>L12353</td>
+                                        <td>31/12/2026</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 10 -->
+                                    <tr>
+                                        <td><strong>ALI002</strong></td>
+                                        <td>Leite em Pó Integral</td>
+                                        <td><span class="badge bg-secondary">Alimentos</span></td>
+                                        <td>24</td>
+                                        <td>15</td>
+                                        <td>L12354</td>
+                                        <td>12/03/2026</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 11 -->
+                                    <tr>
+                                        <td><strong>CHA002</strong></td>
+                                        <td>Chá Preto Inglês</td>
+                                        <td><span class="badge bg-success">Chá</span></td>
+                                        <td>18</td>
+                                        <td>12</td>
+                                        <td>L12355</td>
+                                        <td>22/07/2025</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Exemplo 12 -->
+                                    <tr>
+                                        <td><strong>ACC003</strong></td>
+                                        <td>Xícara de Café Cerâmica</td>
+                                        <td><span class="badge bg-warning">Acessórios</span></td>
+                                        <td>100</td>
+                                        <td>50</td>
+                                        <td>L12356</td>
+                                        <td>31/12/2027</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">✏️</a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger">🗑️</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paginação -->
+                <nav aria-label="Paginação" class="mt-3">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Anterior</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Próxima</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-cafe-dark text-light text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2024 Café Aroma & Sabor - Sistema de Gestão de Estoque</p>
+    </footer>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

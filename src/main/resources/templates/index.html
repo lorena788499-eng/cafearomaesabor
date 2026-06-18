@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Aroma & Sabor - Sistema de Estoque</title>
+    <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-cafe-light">
+    <!-- Header com usuário logado -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-cafe-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <strong>☕ Café Aroma & Sabor</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link text-light">
+                            Usuário: <strong th:text="${nomeUsuario} ?: 'Usuário'"></strong>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light ms-2" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container-fluid py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!-- Título -->
+                <div class="text-center mb-5">
+                    <h1 class="display-5 text-cafe-dark">Painel Principal</h1>
+                    <p class="text-muted">Bem-vindo ao Sistema de Gestão de Estoque</p>
+                </div>
+
+                <!-- Cards de Navegação -->
+                <div class="row g-4 mb-5">
+                    <!-- Card Cadastro de Produtos -->
+                    <div class="col-md-6">
+                        <div class="card card-cafe h-100 shadow-sm hover-card">
+                            <div class="card-body text-center p-5">
+                                <div class="icon-large text-cafe mb-3">
+                                    📦
+                                </div>
+                                <h5 class="card-title text-cafe-dark">Cadastro de Produtos</h5>
+                                <p class="card-text text-muted">Gerencie o cadastro de produtos do estoque. Adicione novos produtos, edite ou remova os existentes.</p>
+                                <a th:href="@{/cadastro-produtos}" class="btn btn-cafe mt-3">
+                                    Acessar →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Gestão de Estoque -->
+                    <div class="col-md-6">
+                        <div class="card card-cafe h-100 shadow-sm hover-card">
+                            <div class="card-body text-center p-5">
+                                <div class="icon-large text-cafe mb-3">
+                                    📊
+                                </div>
+                                <h5 class="card-title text-cafe-dark">Gestão de Estoque</h5>
+                                <p class="card-text text-muted">Registre entradas e saídas de produtos. Acompanhe movimentações e níveis mínimos.</p>
+                                <a th:href="@{/gestao-estoque}" class="btn btn-cafe mt-3">
+                                    Acessar →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de Alertas (Informativo) -->
+                <div class="row" th:if="${produtosAlerta > 0}">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>⚠️ Atenção:</strong> Você tem <span th:text="${produtosAlerta}"></span> produto(s) com quantidade abaixo do estoque mínimo.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" th:if="${produtosProximosVencer > 0}">
+                    <div class="col-md-12">
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>📅 Aviso:</strong> <span th:text="${produtosProximosVencer}"></span> produto(s) vencerão nos próximos 7 dias.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumo Rápido -->
+                <div class="row mt-5 g-3">
+                    <div class="col-md-3">
+                        <div class="card bg-light border-cafe">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Total de Produtos</h6>
+                                <h3 class="text-cafe-dark" th:text="${totalProdutos} ?: '0'"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-light border-cafe">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Produtos Alerta Mínimo</h6>
+                                <h3 class="text-danger" th:text="${produtosAlerta} ?: '0'"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-light border-cafe">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Próximos a Vencer</h6>
+                                <h3 class="text-warning" th:text="${produtosProximosVencer} ?: '0'"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-light border-cafe">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-muted">Movim. Recentes</h6>
+                                <h3 class="text-cafe" th:text="${movimentacoesHoje} ?: '0'"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-cafe-dark text-light text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2026 Café Aroma & Sabor - Sistema de Gestão de Estoque</p>
+    </footer>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
